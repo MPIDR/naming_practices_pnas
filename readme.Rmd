@@ -1,11 +1,39 @@
+---
+title: "Supplementary Materials"
+author: "Andres Castro and Diego Alburez-Gutierrez"
+date: "27/01/2022"
+output:
+  github_document:
+    toc: true
+---
 
-# Load libraries
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Online supplementary materials for paper:
+
+Castro, Andres and Diego Alburez-Gutierrez. 2022. "North and South: Naming practices and the hidden dimension of global disparities in knowledge production." *Proceedings of the National Academy of Sciences* (in press).
+
+In this repository, we provide country-level localization rates, the summary tables of all the linear models reported in the paper, and the scripts (in R language) to reproduce the four figures included in the manuscript . These materials constitute the evidential base for our claims. 
+
+In order to access the aggregated data presented in the paper and replicate the main finding of the paper, clone this repository to a local directory. The data is stored in four `.RDS` files, which can be read by the R software. All the code is in the `readme.Rmd` file, which is rendered below.  
+
+# Data access and availability
+
+We accessed the Scopus data provided by Elsevier thanks to the Kompetenzzentrum für Bibliometrie. Please note that our contractual agreement precludes us from redistributing the raw unprocessed data (i.e., the individual-level publication records). Users interested in accessing the microdata should contact Elsevier or the Kompetenzzentrum für Bibliometrie directly to enquire about the conditions of access and use (https://www.bibliometrie.info/index.php?id=kontakt).
+
+# Reproducible scripts
+
+Load packages:
+
+```{r}
 library(RColorBrewer); library(rgdal); library(rworldmap); library(car)
+```
 
-#### -------------------------------------------------------------------------------- ####
-# FIGURE 1
-#### -------------------------------------------------------------------------------- ####
+## FIGURE 1
 
+```{r, fig.width=9, fig.height=6, warning=FALSE}
 # Reading the data
 t_all<-readRDS("Data_Figure_1.RDS")[[1]]
 t_pro<-readRDS("Data_Figure_1.RDS")[[2]]
@@ -32,12 +60,11 @@ for(i in 1:length(levels(t_all$r_abregf))){
 legend(1960, -.25, fill=c06, legend=levels(t_all$r_abregf), bty='n', xpd=NA,
        title=expression(bold("Region of study")), border='transparent', ncol=3,
        title.adj=0)
+```
 
+## FIGURE 2
 
-#### -------------------------------------------------------------------------------- ####
-# FIGURE 2
-#### -------------------------------------------------------------------------------- ####
-
+```{r, fig.height=8, warning=FALSE}
 # Reading the data, merging with world map, and using the Robinson projection
 dgc<-readRDS('Data_Figure_2.RDS')
 m1<-joinCountryData2Map(dgc, joinCode="ISO3", nameJoinColumn="iso3c") 
@@ -73,10 +100,11 @@ mapCountryData(m1, nameColumnToPlot="total_lc", catMethod='categorical',
                borderCol='gray40', numCats=5, oceanCol='white', lwd=0.01,
                mapTitle="", colourPalette=scales::alpha(c05,.95))
 
-#### -------------------------------------------------------------------------------- ####
-# FIGURE 3
-#### -------------------------------------------------------------------------------- ####
+```
 
+## FIGURE 3
+
+```{r, warning=FALSE}
 # Reading the data (summary Poisson model)
 sp0<-readRDS("Data_Figure_3.RDS")
 
@@ -120,12 +148,11 @@ vlabs<-c("Number of countries \n (Ref: One)",
 axis(2, s$p_yaxisp, s$p_catego, las=2, font=3, cex.axis=0.6)
 axis(2, s$p_yaxisp[s$p_varloc==gap]+c(3,5,5,4,6,6)-.5, vlabs, las=2, tick=F, 
      cex.axis=0.7, font=2)
+```
 
+## FIGURE 4
 
-#### -------------------------------------------------------------------------------- ####
-# FIGURE 4
-#### -------------------------------------------------------------------------------- ####
-
+```{r, warning=FALSE}
 # Reading the data
 sp0<-readRDS("Data_Figure_4.RDS")
 
@@ -195,5 +222,10 @@ for(f in 1:2){
        las=2, tick=F, cex.axis=0.85, font=2)
 }
 
+```
 
+# Session information
 
+```{r}
+sessionInfo()
+```
